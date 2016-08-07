@@ -48,3 +48,24 @@ app.get('/api/inputlocation', function(request, response) {
 				});
 	
 });
+
+
+app.use(express.static(__dirname + '/public'));
+
+app.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "X-Requested-With");
+	next();
+});
+
+app.listen(process.env.PORT || 5000);
+console.log('port ' + (process.env.PORT || 5000));
+
+function __sendErrorResponse(response, code, content) {
+	var ret = {
+		err: code,
+		desc : content 
+	};
+	response.status(code).send(ret);
+	response.end();
+}
